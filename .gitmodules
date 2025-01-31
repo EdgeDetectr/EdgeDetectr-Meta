@@ -1,5 +1,5 @@
 [submodule "frontend"]
-	path = frontend
+	path = EdgeDetectr-Frontend
 	url = https://github.com/EdgeDetectr/EdgeDetectr-Frontend
 [submodule "backend"]
 	path = backend
