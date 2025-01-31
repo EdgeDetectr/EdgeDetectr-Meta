@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./EdgeDetectr-Frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      - UPLOAD_URL=http://localhost:3001/uploads
+      - NODE_ENV=production
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - OPERATOR_PROCESS=/app/operators/build
+      - OPERATORS_URL=http://operators:3002
+      - NODE_ENV=production
+    volumes:
+      - ./backend/uploads:/app/uploads
+      - ./backend/results:/app/results
+    networks:
+      - app-network
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
