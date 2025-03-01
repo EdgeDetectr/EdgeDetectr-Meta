@@ -7,6 +7,10 @@ EdgeDetectr is a full-stack web application for applying image processing operat
 - **Operators**: A C++ module using OpenCV to apply edge detection operators.
 - **Deployment**: Fully containerized using Docker.
 
+## 🎥 Demo
+https://github.com/user-attachments/assets/47b9ef04-d53f-4267-a9d8-3cf7a6b2d60c
+
+
 ## 🚀 Features
 - Upload an image via the frontend.
 - Choose an edge detection operator (Sobel, Prewitt, Roberts, etc.).
