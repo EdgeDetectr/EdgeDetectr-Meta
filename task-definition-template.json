@@ -1,0 +1,26 @@
+{
+  "family": "TASK_FAMILY_NAME",
+  "networkMode": "awsvpc",
+  "executionRoleArn": "arn:aws:iam::AWS_ACCOUNT_ID:role/EXECUTION_ROLE_NAME",
+  "containerDefinitions": [
+    {
+      "name": "CONTAINER_NAME",
+      "image": "AWS_ACCOUNT_ID.dkr.ecr.AWS_REGION.amazonaws.com/REPOSITORY_NAME:latest",
+      "essential": true,
+      "portMappings": [
+        { "containerPort": 3001, "hostPort": 3001, "protocol": "tcp" }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/LOG_GROUP_NAME",
+          "awslogs-region": "AWS_REGION",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ],
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512"
+}

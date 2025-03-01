@@ -4,3 +4,15 @@ node_modules/
 !.elasticbeanstalk/*.global.yml
 .vscode/
 .DS_STORE
+
+# Security-sensitive deployment files
+rebuild-backend.sh
+task-definition.json
+task-definition-fixed.json
+.env.deploy
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
