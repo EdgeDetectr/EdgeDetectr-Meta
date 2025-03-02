@@ -7,9 +7,11 @@ node_modules/
 
 # Security-sensitive deployment files
 rebuild-backend.sh
+rebuild-frontend.sh
 task-definition.json
 task-definition-fixed.json
 .env.deploy
+ssl/
 
 # Environment variables
 .env
