@@ -8,6 +8,31 @@ RED='\033[0;31m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
+# Load environment variables
+if [ -f ".env.deploy" ]; then
+  echo "Loading environment variables from .env.deploy..."
+  export $(grep -v '^#' .env.deploy | xargs)
+else
+  echo -e "${RED}ERROR: .env.deploy file not found!${NC}"
+  echo "Please create this file from the .env.example template."
+  exit 1
+fi
+
+# Print banner
+echo -e "${GREEN}=============================================${NC}"
+echo -e "${GREEN}          EdgeDetectr Deployment             ${NC}"
+echo -e "${GREEN}=============================================${NC}"
+echo -e "This script will deploy both the frontend and backend components."
+echo ""
+
+# Feature information
+echo -e "${BLUE}Features in this deployment:${NC}"
+echo -e "- Image processing with multiple edge detection operators"
+echo -e "- Client-side rate limiting (1 upload per 30 seconds)"
+echo -e "- Responsive UI with real-time status updates"
+echo -e "- Dockerized backend for scalable deployment"
+echo ""
+
 # Check if the ssl folder exists and warn about security
 if [ -d "./ssl" ]; then
   echo -e "${YELLOW}Warning: SSL folder detected.${NC}"
@@ -69,12 +94,13 @@ print_section "Checking Backend Health"
 echo "Waiting 30 seconds for backend deployment to stabilize..."
 sleep 30  # Give ECS some time to start deploying
 
-# Get API URL from environment file
-API_URL=$(grep "NEXT_PUBLIC_API_URL" .env.deploy | cut -d '=' -f2)
-if [ -z "$API_URL" ]; then
-  print_warning "Could not find API_URL in .env.deploy, using default"
-  API_URL="https://edgedetectr-lb-2106112805.us-east-1.elb.amazonaws.com"
+# Check if NEXT_PUBLIC_API_URL is set in the environment
+if [ -z "$NEXT_PUBLIC_API_URL" ]; then
+  print_error "NEXT_PUBLIC_API_URL is not set in .env.deploy file"
 fi
+
+# Use the environment variable for API URL
+API_URL=$NEXT_PUBLIC_API_URL
 
 # Check if backend is responding
 echo "Checking backend health at $API_URL/health..."
@@ -112,7 +138,19 @@ echo "Frontend: Changes pushed to GitHub, AWS Amplify deployment triggered"
 echo ""
 echo "You can check the status of your deployments at:"
 echo "- Backend: AWS ECS Console"
-echo "- Frontend: AWS Amplify Console (https://main.d11bmptbl3wre6.amplifyapp.com)"
+
+# Display custom domain information if set, using environment variables
+if [ ! -z "$CUSTOM_DOMAIN" ]; then
+  echo "- Frontend: AWS Amplify Console + Custom Domain (configured)"
+  print_success "Custom domain is configured in environment variables"
+else
+  echo "- Frontend: AWS Amplify Console (using default Amplify domain)"
+  print_warning "No custom domain detected. To set up a custom domain:"
+  echo "1. Set CUSTOM_DOMAIN environment variable in .env.deploy"
+  echo "2. Add the domain in AWS Amplify Console (Domain management)"
+  echo "3. Follow the DNS configuration steps provided by Amplify"
+  echo "4. Update ALLOWED_ORIGINS to include your custom domain"
+fi
 
 print_section "Next Steps"
 echo "1. Wait for the Amplify deployment to complete (typically 2-5 minutes)"

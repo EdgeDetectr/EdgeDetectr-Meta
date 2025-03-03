@@ -10,6 +10,10 @@
       "portMappings": [
         { "containerPort": 3001, "hostPort": 3001, "protocol": "tcp" }
       ],
+      "environment": [
+        { "name": "ALLOWED_ORIGINS", "value": "ALLOWED_ORIGINS" },
+        { "name": "NODE_ENV", "value": "production" }
+      ],
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {

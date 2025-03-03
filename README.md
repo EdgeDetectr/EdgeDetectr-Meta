@@ -18,6 +18,7 @@ https://github.com/user-attachments/assets/47b9ef04-d53f-4267-a9d8-3cf7a6b2d60c
 - Choose an edge detection operator (Sobel, Prewitt, Roberts, etc.).
 - Process the image on the backend using C++ and OpenCV.
 - Retrieve and display the processed image.
+- Rate limiting to prevent abuse (maximum 1 upload every 30 seconds).
 - Fully containerized for easy deployment.
 
 ---
@@ -168,6 +169,8 @@ Response:
 }
 ```
 
+> Note: The API is protected by a client-side rate limit that allows only one image upload per 30 seconds.
+
 ---
 
 ## 🛠️ Tech Stack
@@ -175,6 +178,7 @@ Response:
 - **Backend**: Node.js, Express.js, Multer (file uploads)
 - **Image Processing**: OpenCV (C++), CMake
 - **Database**: Local storage (future implementation for S3 support)
+- **Security**: Client-side rate limiting for DDoS protection
 - **Containerization**: Docker, Docker Compose
 
 ---
