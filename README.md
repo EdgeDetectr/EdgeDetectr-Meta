@@ -10,8 +10,7 @@ EdgeDetectr is a full-stack web application for applying image processing operat
   - Frontend: Deployed to AWS Amplify
 
 ## 🎥 Demo
-https://github.com/user-attachments/assets/47b9ef04-d53f-4267-a9d8-3cf7a6b2d60c
-
+https://github.com/user-attachments/assets/b0e6c67c-02af-4b8a-8063-8bb069e6db48
 
 ## 🚀 Features
 - Upload an image via the frontend.
